@@ -34,7 +34,7 @@ spec:
         {{- toYaml .Values.management.podSecurityContext | nindent 8 }}
       initContainers:
         - name: configure
-          image: golang:latest
+          image: docker.io/library/golang:latest
           imagePullPolicy: {{ .Values.management.image.pullPolicy }}
           command: ["/bin/sh", "-c"]
           args:
@@ -45,6 +45,12 @@ spec:
           envFrom:
           - secretRef:
               name: {{ .Values.relay.env.secretName }}
+          {{- with .Values.management.envAdditionalSecrets }}
+          {{- range . }}
+          - secretRef:
+              name: {{ . }}
+          {{- end }}
+          {{- end }}
           env:
             - name: NETBIRD_SIGNAL_URI
               value: {{ .Values.signal.uri }}

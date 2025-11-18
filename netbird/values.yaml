@@ -93,6 +93,9 @@ management:
   ## @param management.imagePullSecrets
   imagePullSecrets: []
 
+  ## @param management.envAdditionalSecrets
+  envAdditionalSecrets: []
+
   serviceAccount:
     # yamllint disable-line rule:line-length
     ## @param management.serviceAccount.create Specifies whether a service account should be created.
