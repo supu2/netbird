@@ -21,9 +21,9 @@
         "TimeBasedCredentials": false
     },
     "Relay": {
-        "Addresses": ["${NETBIRD_RELAY_DOMAIN}:${NETBIRD_RELAY_PORT}"],
+        "Addresses": ["${NB_EXPOSED_ADDRESS}"],
         "CredentialsTTL": "24h",
-        "Secret": "${NETBIRD_RELAY_AUTH_SECRET}"
+        "Secret": "${NB_AUTH_SECRET}"
     },
     "StoreConfig": {
         "Engine": "${NETBIRD_STORE_CONFIG_ENGINE:-sqlite}"
