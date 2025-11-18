@@ -153,6 +153,13 @@ spec:
             - console
             - --dns-domain
             - {{ .Values.management.dnsDomain }}
+          {{- with .Values.management.envAdditionalSecrets }}
+          envFrom:
+          {{- range . }}
+          - secretRef:
+              name: {{ . }}
+          {{- end }}
+          {{- end }}
           ports:
             - name: http
               containerPort: {{ .Values.management.service.port }}
