@@ -1,0 +1,17 @@
+{{- if .Values.proxy.enabled -}}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "netbird.fullname" . }}-proxy
+  labels:
+    {{- include "netbird.proxy.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.proxy.service.type }}
+  ports:
+    - port: {{ .Values.proxy.service.port }}
+      targetPort: https
+      protocol: TCP
+      name: https
+  selector:
+    {{- include "netbird.proxy.selectorLabels" . | nindent 4 }}
+{{- end }}

@@ -67,6 +67,18 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end }}
 
 {{/*
+Common proxy labels
+*/}}
+{{- define "netbird.proxy.labels" -}}
+helm.sh/chart: {{ include "netbird.chart" . }}
+{{ include "netbird.proxy.selectorLabels" . }}
+{{- if .Chart.AppVersion }}
+app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+{{- end }}
+app.kubernetes.io/managed-by: {{ .Release.Service }}
+{{- end }}
+
+{{/*
 Management selector labels
 */}}
 {{- define "netbird.management.selectorLabels" -}}
@@ -87,6 +99,14 @@ Relay selector labels
 */}}
 {{- define "netbird.relay.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "netbird.name" . }}-relay
+app.kubernetes.io/instance: {{ .Release.Name }}
+{{- end }}
+
+{{/*
+Proxy selector labels
+*/}}
+{{- define "netbird.proxy.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "netbird.name" . }}-proxy
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
@@ -120,5 +140,16 @@ Create the name of the relay service account to use
 {{- default (printf "%s-relay" (include "netbird.fullname" .)) .Values.relay.serviceAccount.name }}
 {{- else }}
 {{- default "default" .Values.relay.serviceAccount.name }}
+{{- end }}
+{{- end }}
+
+{{/*
+Create the name of the proxy service account to use
+*/}}
+{{- define "netbird.proxy.serviceAccountName" -}}
+{{- if .Values.proxy.serviceAccount.create }}
+{{- default (printf "%s-proxy" (include "netbird.fullname" .)) .Values.proxy.serviceAccount.name }}
+{{- else }}
+{{- default "default" .Values.proxy.serviceAccount.name }}
 {{- end }}
 {{- end }}

@@ -1,0 +1,20 @@
+{{/* Create a cert-manager Certificate resource for the proxy. */}}
+{{- if and .Values.proxy.enabled .Values.proxy.certificate.enabled -}}
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: {{ include "netbird.fullname" . }}-proxy
+  labels:
+    {{- include "netbird.proxy.labels" . | nindent 4 }}
+spec:
+  dnsNames:
+    - {{ .Values.proxy.certificate.dnsName }}
+  issuerRef:
+    group: cert-manager.io
+    kind: {{ .Values.proxy.certificate.issuerKind }}
+    name: {{ .Values.proxy.certificate.issuerName }}
+  secretName: {{ default (printf "%s-proxy-tls" (include "netbird.fullname" .)) .Values.proxy.certificate.secretName }}
+  usages:
+    - digital signature
+    - key encipherment
+{{- end -}}

@@ -1,0 +1,97 @@
+{{- if .Values.proxy.enabled -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "netbird.fullname" . }}-proxy
+  {{- with .Values.proxy.deploymentAnnotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  labels:
+    {{- include "netbird.proxy.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "netbird.proxy.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.proxy.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "netbird.proxy.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.proxy.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "netbird.proxy.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.proxy.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}-proxy
+          securityContext:
+            {{- toYaml .Values.proxy.securityContext | nindent 12 }}
+          image: "{{ .Values.proxy.image.repository }}:{{ .Values.proxy.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.proxy.image.pullPolicy }}
+          ports:
+            - name: https
+              containerPort: {{ .Values.proxy.service.port }}
+              protocol: TCP
+          env:
+            - name: NB_PROXY_DOMAIN
+              value: {{ .Values.proxy.domain | quote }}
+            - name: NB_PROXY_MANAGEMENT_ADDRESS
+              value: {{ default (printf "http://%s-management:%d" (include "netbird.fullname" .) (int .Values.management.service.port)) .Values.proxy.managementAddress | quote }}
+            - name: NB_PROXY_ALLOW_INSECURE
+              value: {{ printf "%t" .Values.proxy.allowInsecure | quote }}
+            - name: NB_PROXY_ADDRESS
+              value: {{ .Values.proxy.address | quote }}
+            - name: NB_PROXY_CERTIFICATE_DIRECTORY
+              value: {{ .Values.proxy.certificateDirectory | quote }}
+            - name: NB_PROXY_CERTIFICATE_FILE
+              value: {{ .Values.proxy.certificateFile | quote }}
+            - name: NB_PROXY_CERTIFICATE_KEY_FILE
+              value: {{ .Values.proxy.certificateKeyFile | quote }}
+            {{- with .Values.proxy.forwardedProto }}
+            - name: NB_PROXY_FORWARDED_PROTO
+              value: {{ . | quote }}
+            {{- end }}
+            - name: NB_PROXY_DEBUG_LOGS
+              value: {{ printf "%t" .Values.proxy.debugLogs | quote }}
+            - name: NB_PROXY_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.proxy.tokenSecret.name }}
+                  key: {{ .Values.proxy.tokenSecret.key }}
+          resources:
+            {{- toYaml .Values.proxy.resources | nindent 12 }}
+          volumeMounts:
+            - mountPath: {{ .Values.proxy.certificateDirectory }}
+              name: certs
+      {{- with .Values.proxy.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.proxy.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.proxy.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      volumes:
+        - name: certs
+          {{- if .Values.proxy.certificate.enabled }}
+          secret:
+            secretName: {{ default (printf "%s-proxy-tls" (include "netbird.fullname" .)) .Values.proxy.certificate.secretName }}
+          {{- else if .Values.proxy.persistence.enabled }}
+          persistentVolumeClaim:
+            claimName: {{ include "netbird.fullname" . }}-proxy
+          {{- else }}
+          emptyDir: {}
+          {{- end }}
+{{- end }}

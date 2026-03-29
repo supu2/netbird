@@ -588,3 +588,162 @@ relay:
   ## @param relay.affinity
   ##
   affinity: {}
+
+proxy:
+  ## @param proxy.enabled
+  ##
+  enabled: false
+
+  ## @param proxy.domain
+  ##
+  domain: proxy.example.com
+
+  image:
+    ## @param proxy.image.repository
+    ##
+    repository: netbirdio/reverse-proxy
+
+    ## @param proxy.image.pullPolicy
+    ##
+    pullPolicy: IfNotPresent
+
+    ## @param proxy.image.tag Overrides the image tag whose default is the chart appVersion.
+    ##
+    tag: ""
+
+  ## @param proxy.imagePullSecrets
+  ##
+  imagePullSecrets: []
+
+  ## @param proxy.managementAddress
+  ##
+  managementAddress: ""
+
+  ## @param proxy.allowInsecure
+  ##
+  allowInsecure: true
+
+  ## @param proxy.address
+  ##
+  address: ":8443"
+
+  certificate:
+    ## @param proxy.certificate.enabled Create a cert-manager Certificate resource.
+    ##
+    enabled: true
+
+    ## @param proxy.certificate.dnsName DNS name for the proxy certificate.
+    ##
+    dnsName: proxy.example.com
+
+    ## @param proxy.certificate.issuerName Certificate issuer name.
+    ##
+    issuerName: letsencrypt
+
+    ## @param proxy.certificate.issuerKind Certificate issuer kind.
+    ##
+    issuerKind: ClusterIssuer
+
+    ## @param proxy.certificate.secretName TLS secret name.
+    ##
+    secretName: ""
+
+  ## @param proxy.certificateDirectory
+  ##
+  certificateDirectory: /certs
+
+  ## @param proxy.certificateFile
+  ##
+  certificateFile: tls.crt
+
+  ## @param proxy.certificateKeyFile
+  ##
+  certificateKeyFile: tls.key
+
+  ## @param proxy.forwardedProto
+  ##
+  forwardedProto: ""
+
+  ## @param proxy.debugLogs
+  ##
+  debugLogs: false
+
+  tokenSecret:
+    ## @param proxy.tokenSecret.name
+    ##
+    name: netbird-proxy-secret
+
+    ## @param proxy.tokenSecret.key
+    ##
+    key: NB_PROXY_TOKEN
+
+  serviceAccount:
+    ## @param proxy.serviceAccount.create Specifies whether a service account should be created.
+    ##
+    create: true
+
+    ## @param proxy.serviceAccount.annotations Annotations to add to the service account.
+    ##
+    annotations: {}
+
+    ## @param proxy.serviceAccount.name The name of the service account to use.
+    ##
+    name: ""
+
+  ## @param proxy.deploymentAnnotations Annotations to add to the proxy deployment.
+  ##
+  deploymentAnnotations: {}
+
+  ## @param proxy.podAnnotations Annotations to add to the proxy pod(s).
+  ##
+  podAnnotations: {}
+
+  ## @param proxy.podSecurityContext
+  ##
+  podSecurityContext:
+    {}
+
+  ## @param proxy.securityContext
+  ##
+  securityContext:
+    {}
+
+  service:
+    ## @param proxy.service.type
+    ##
+    type: ClusterIP
+
+    ## @param proxy.service.port
+    ##
+    port: 8443
+
+  persistence:
+    ## @param proxy.persistence.enabled
+    ##
+    enabled: false
+
+    ## @param proxy.persistence.accessModes
+    ##
+    accessModes:
+      - ReadWriteOnce
+
+    ## @param proxy.persistence.size
+    ##
+    size: 100Mi
+
+  ## @param proxy.resources
+  ##
+  resources:
+    {}
+
+  ## @param proxy.nodeSelector
+  ##
+  nodeSelector: {}
+
+  ## @param proxy.tolerations
+  ##
+  tolerations: []
+
+  ## @param proxy.affinity
+  ##
+  affinity: {}
