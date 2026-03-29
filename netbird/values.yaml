@@ -96,6 +96,13 @@ management:
   ## @param management.envAdditionalSecrets
   envAdditionalSecrets: []
 
+  encryptionKeySecret:
+    ## @param management.encryptionKeySecret.name Secret name containing the store encryption key.
+    name: netbird-management-encryption
+
+    ## @param management.encryptionKeySecret.key Secret key name for the store encryption key.
+    key: NETBIRD_STORE_ENCRYPTION_KEY
+
   serviceAccount:
     # yamllint disable-line rule:line-length
     ## @param management.serviceAccount.create Specifies whether a service account should be created.

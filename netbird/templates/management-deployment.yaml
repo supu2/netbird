@@ -81,6 +81,11 @@ spec:
               value: {{ .Values.auth.audience }}
             - name: NETBIRD_AUTH_USER_ID_CLAIM
               value: {{ .Values.auth.userIDClaim }}
+            - name: NETBIRD_STORE_ENCRYPTION_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.management.encryptionKeySecret.name }}
+                  key: {{ .Values.management.encryptionKeySecret.key }}
             # Device auth configuration.
             {{- if eq .Values.auth.device.provider "hosted" }}
             - name: NETBIRD_AUTH_DEVICE_AUTH_PROVIDER
