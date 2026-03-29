@@ -637,10 +637,6 @@ proxy:
     dnsNames:
       - proxy.example.com
 
-    ## @param proxy.certificate.dnsName Deprecated single DNS name fallback.
-    ##
-    dnsName: ""
-
     ## @param proxy.certificate.issuerName Certificate issuer name.
     ##
     issuerName: letsencrypt-prod
@@ -721,20 +717,6 @@ proxy:
     ## @param proxy.service.port
     ##
     port: 8443
-
-  persistence:
-    ## @param proxy.persistence.enabled
-    ##
-    enabled: false
-
-    ## @param proxy.persistence.accessModes
-    ##
-    accessModes:
-      - ReadWriteOnce
-
-    ## @param proxy.persistence.size
-    ##
-    size: 100Mi
 
   ## @param proxy.resources
   ##
