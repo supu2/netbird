@@ -79,7 +79,7 @@ management:
   image:
     ## @param management.image.repository
     ##
-    repository: netbirdio/management
+    repository: docker.io/netbirdio/management
 
     ## @param management.image.pullPolicy
     ##
@@ -268,7 +268,7 @@ signal:
   image:
     ## @param signal.image.repository
     ##
-    repository: netbirdio/signal
+    repository: docker.io/netbirdio/signal
 
     ## @param signal.image.pullPolicy
     ##
@@ -444,7 +444,7 @@ relay:
   image:
     ## @param relay.image.repository
     ##
-    repository: netbirdio/relay
+    repository: docker.io/netbirdio/relay
 
     ## @param relay.image.pullPolicy
     ##
@@ -601,7 +601,7 @@ proxy:
   image:
     ## @param proxy.image.repository
     ##
-    repository: netbirdio/reverse-proxy
+    repository: docker.io/netbirdio/reverse-proxy
 
     ## @param proxy.image.pullPolicy
     ##
@@ -638,7 +638,7 @@ proxy:
 
     ## @param proxy.certificate.issuerName Certificate issuer name.
     ##
-    issuerName: letsencrypt
+    issuerName: letsencrypt-prod
 
     ## @param proxy.certificate.issuerKind Certificate issuer kind.
     ##
