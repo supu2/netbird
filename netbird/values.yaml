@@ -632,9 +632,14 @@ proxy:
     ##
     enabled: true
 
-    ## @param proxy.certificate.dnsName DNS name for the proxy certificate.
+    ## @param proxy.certificate.dnsNames DNS names for the proxy certificate.
     ##
-    dnsName: proxy.example.com
+    dnsNames:
+      - proxy.example.com
+
+    ## @param proxy.certificate.dnsName Deprecated single DNS name fallback.
+    ##
+    dnsName: ""
 
     ## @param proxy.certificate.issuerName Certificate issuer name.
     ##

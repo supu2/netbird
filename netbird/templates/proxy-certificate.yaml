@@ -7,8 +7,10 @@ metadata:
   labels:
     {{- include "netbird.proxy.labels" . | nindent 4 }}
 spec:
+  {{- with .Values.proxy.certificate.dnsNames }}
   dnsNames:
-    - {{ .Values.proxy.certificate.dnsName }}
+  {{ toYaml . | nindent 4 }}
+  {{- end }}
   issuerRef:
     group: cert-manager.io
     kind: {{ .Values.proxy.certificate.issuerKind }}
