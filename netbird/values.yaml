@@ -653,18 +653,6 @@ proxy:
     ##
     secretName: ""
 
-  ## @param proxy.certificateDirectory
-  ##
-  certificateDirectory: /certs
-
-  ## @param proxy.certificateFile
-  ##
-  certificateFile: tls.crt
-
-  ## @param proxy.certificateKeyFile
-  ##
-  certificateKeyFile: tls.key
-
   ## @param proxy.wildcardCertDir
   ##
   wildcardCertDir: /wildcard-certs
