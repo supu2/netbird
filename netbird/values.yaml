@@ -669,6 +669,10 @@ proxy:
   ##
   wildcardCertDir: /wildcard-certs
 
+  ## @param proxy.acmeCertificates Enable ACME certificate handling in the proxy.
+  ##
+  acmeCertificates: false
+
   ## @param proxy.forwardedProto
   ##
   forwardedProto: ""

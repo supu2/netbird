@@ -57,6 +57,8 @@ spec:
               value: {{ .Values.proxy.certificateKeyFile | quote }}
             - name: NB_PROXY_WILDCARD_CERT_DIR
               value: {{ .Values.proxy.wildcardCertDir | quote }}
+            - name: NB_PROXY_ACME_CERTIFICATES
+              value: {{ printf "%t" .Values.proxy.acmeCertificates | quote }}
             {{- with .Values.proxy.forwardedProto }}
             - name: NB_PROXY_FORWARDED_PROTO
               value: {{ . | quote }}
@@ -73,10 +75,6 @@ spec:
           volumeMounts:
             - mountPath: {{ .Values.proxy.certificateDirectory }}
               name: certs
-            {{- if .Values.proxy.certificate.wildcardCertificate }}
-            - mountPath: {{ .Values.proxy.wildcardCertDir }}
-              name: wildcard-certs
-            {{- end }}
       {{- with .Values.proxy.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -100,9 +98,4 @@ spec:
           {{- else }}
           emptyDir: {}
           {{- end }}
-        {{- if .Values.proxy.certificate.wildcardCertificate }}
-        - name: wildcard-certs
-          secret:
-            secretName: {{ default (printf "%s-proxy-tls" (include "netbird.fullname" .)) .Values.proxy.certificate.secretName }}
-        {{- end }}
 {{- end }}
