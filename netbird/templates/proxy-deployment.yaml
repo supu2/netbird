@@ -55,6 +55,8 @@ spec:
               value: {{ .Values.proxy.certificateFile | quote }}
             - name: NB_PROXY_CERTIFICATE_KEY_FILE
               value: {{ .Values.proxy.certificateKeyFile | quote }}
+            - name: NB_PROXY_WILDCARD_CERT_DIR
+              value: {{ .Values.proxy.wildcardCertDir | quote }}
             {{- with .Values.proxy.forwardedProto }}
             - name: NB_PROXY_FORWARDED_PROTO
               value: {{ . | quote }}

@@ -661,6 +661,10 @@ proxy:
   ##
   certificateKeyFile: tls.key
 
+  ## @param proxy.wildcardCertDir
+  ##
+  wildcardCertDir: /wildcard-certs
+
   ## @param proxy.forwardedProto
   ##
   forwardedProto: ""
