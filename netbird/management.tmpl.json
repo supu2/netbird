@@ -39,7 +39,7 @@
         "Address": "0.0.0.0:80",
         "AuthAudience": "${NETBIRD_AUTH_AUDIENCE}",
         "AuthUserIDClaim": "${NETBIRD_AUTH_USER_ID_CLAIM:-sub}",
-        "AuthClientID": "${NETBIRD_IDP_CLIENT_ID}",
+        "AuthClientID": "${NETBIRD_AUTH_DEVICE_AUTH_CLIENT_ID}",
         "AuthCallbackURL": "https://${NETBIRD_DOMAIN}/api/reverse-proxy/callback",
         "CertFile": "${NETBIRD_MGMT_API_CERT_FILE}",
         "CertKey": "${NETBIRD_MGMT_API_CERT_KEY_FILE}",
