@@ -63,6 +63,8 @@ spec:
             - name: NB_PROXY_FORWARDED_PROTO
               value: {{ . | quote }}
             {{- end }}
+            - name: NB_PROXY_PROXY_PROTOCOL
+              value: {{ printf "%t" .Values.proxy.proxyProtocol | quote }}
             - name: NB_PROXY_DEBUG_LOGS
               value: {{ printf "%t" .Values.proxy.debugLogs | quote }}
             - name: NB_PROXY_TOKEN

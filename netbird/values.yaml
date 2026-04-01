@@ -677,6 +677,10 @@ proxy:
   ##
   forwardedProto: ""
 
+  ## @param proxy.proxyProtocol Enable PROXY protocol support in the proxy.
+  ##
+  proxyProtocol: false
+
   ## @param proxy.debugLogs
   ##
   debugLogs: false
