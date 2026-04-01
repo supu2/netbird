@@ -20,7 +20,4 @@ spec:
     kind: {{ .Values.proxy.certificate.issuerKind }}
     name: {{ .Values.proxy.certificate.issuerName }}
   secretName: {{ default (printf "%s-proxy-tls" (include "netbird.fullname" .)) .Values.proxy.certificate.secretName }}
-  usages:
-    - digital signature
-    - key encipherment
 {{- end -}}
