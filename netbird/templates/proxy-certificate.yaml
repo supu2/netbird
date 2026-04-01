@@ -7,8 +7,13 @@ metadata:
   labels:
     {{- include "netbird.proxy.labels" . | nindent 4 }}
 spec:
+  {{- if .Values.proxy.certificate.wildcardCertificate }}
+  dnsNames:
+    - {{ printf "*.%s" (trimPrefix "*." .Values.proxy.domain) | quote }}
+  {{- else }}
   {{- with .Values.proxy.certificate.dnsNames }}
   dnsNames:{{ toYaml . | nindent 4 }}
+  {{- end }}
   {{- end }}
   issuerRef:
     group: cert-manager.io

@@ -73,6 +73,10 @@ spec:
           volumeMounts:
             - mountPath: {{ .Values.proxy.certificateDirectory }}
               name: certs
+            {{- if .Values.proxy.certificate.wildcardCertificate }}
+            - mountPath: {{ .Values.proxy.wildcardCertDir }}
+              name: wildcard-certs
+            {{- end }}
       {{- with .Values.proxy.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -96,4 +100,9 @@ spec:
           {{- else }}
           emptyDir: {}
           {{- end }}
+        {{- if .Values.proxy.certificate.wildcardCertificate }}
+        - name: wildcard-certs
+          secret:
+            secretName: {{ default (printf "%s-proxy-tls" (include "netbird.fullname" .)) .Values.proxy.certificate.secretName }}
+        {{- end }}
 {{- end }}

@@ -632,6 +632,10 @@ proxy:
     ##
     enabled: true
 
+    ## @param proxy.certificate.wildcardCertificate Issue a wildcard certificate for proxy.domain.
+    ##
+    wildcardCertificate: false
+
     ## @param proxy.certificate.dnsNames DNS names for the proxy certificate.
     ##
     dnsNames:
