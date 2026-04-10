@@ -659,7 +659,7 @@ proxy:
 
   ## @param proxy.acmeCertificates Enable ACME certificate handling in the proxy.
   ##
-  acmeCertificates: false
+  acmeCertificates: true
 
   ## @param proxy.forwardedProto
   ##

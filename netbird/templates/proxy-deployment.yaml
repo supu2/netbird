@@ -74,6 +74,7 @@ spec:
             {{- if .Values.proxy.certificate.wildcardCertificate }}
             - mountPath: {{ .Values.proxy.wildcardCertDir }}
               name: certs
+              readOnly: true
             {{- end }}
       {{- with .Values.proxy.nodeSelector }}
       nodeSelector:
