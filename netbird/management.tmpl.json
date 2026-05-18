@@ -25,6 +25,7 @@
         "CredentialsTTL": "24h",
         "Secret": "${NB_AUTH_SECRET}"
     },
+    "DataStoreEncryptionKey": "${NETBIRD_DATASTORE_ENC_KEY}",
     "StoreConfig": {
         "Engine": "${NETBIRD_STORE_CONFIG_ENGINE:-sqlite}"
     },
